@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // For Text
 /*  
  *  Notes:  
  *      - Vector2 is a built in vector with two values.
@@ -8,6 +9,7 @@ using UnityEngine;
  */
 //--------------------------------------------------------------------
 public class ConsolePrint : MonoBehaviour {
+	protected Text text_ref;
 	protected Vector2 location = new Vector2(0.0f, 0.0f);
 	protected Vector2 home = new Vector2(0.0f, 0.0f);
 	protected Vector2 path_to_home;
@@ -24,8 +26,6 @@ public class ConsolePrint : MonoBehaviour {
 		print("You are lost in the woods.\n" +
 			"Can you find your way home before the encroaching " + 
 			"darkness consumes you?");
-		//Print_Location(); // DEBUG
-		//Print_Home(); // DEBUG
 	}
 	//----------------------------------------------------------------
 	void Randomize() {
@@ -52,36 +52,44 @@ public class ConsolePrint : MonoBehaviour {
 		else if (location.y == home.y) {
 			if (location.x > home.x) {
 				print("You need to go west.");
+				text_ref.text = "Go west.";
 			}
 			else {
 				print("You need to go east.");
+				text_ref.text = "Go east.";
 			}
 		}
 		// N/S Tree
 		else if (location.x == home.x) {
 			if (location.y > home.y) {
 				print("You need to go south.");
+				text_ref.text = "Go south.";
 			}
 			else {
 				print("You need to go north.");
+				text_ref.text = "Go north.";
 			}
 		}
 		else {
 			// NE
 			if (location.x > home.x && location.y > home.y) {
 				print("You need to go southwest.");
+				text_ref.text = "Go southwest.";
 			}
 			// SE
 			else if (location.x > home.x && location.y < home.y) {
 				print("You need to go northwest.");
+				text_ref.text = "Go northwest.";
 			}
 			// SW
 			else if (location.x < home.x && location.y < home.y) {
 				print("You need to go northeast.");
+				text_ref.text = "Go northeast.";
 			}
 			// NW - Could be else, but it's nice to see the logic.
 			else if (location.x < home.x && location.y > home.y) {
 				print("You need to go southeast.");
+				text_ref.text = "Go southeast.";
 			}
 		}
 	}
@@ -126,7 +134,7 @@ public class ConsolePrint : MonoBehaviour {
 	// Informs the player of his/her progress.
 	void Update_Player() {
 		Calculate_Distance();
-		// Print_Distance(); // Easy mode.
+		Print_Distance();
 		++moves;
 		Check_Progress();
 	}
