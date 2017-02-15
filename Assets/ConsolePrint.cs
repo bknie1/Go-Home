@@ -9,7 +9,7 @@ using UnityEngine.UI; // For Text
  */
 //--------------------------------------------------------------------
 public class ConsolePrint : MonoBehaviour {
-	protected Text text_ref;
+    protected Text text; // Our text component.
 	protected Vector2 location = new Vector2(0.0f, 0.0f);
 	protected Vector2 home = new Vector2(0.0f, 0.0f);
 	protected Vector2 path_to_home;
@@ -18,6 +18,7 @@ public class ConsolePrint : MonoBehaviour {
 	//----------------------------------------------------------------
 	// Use this for initialization. Runs once at start.
 	void Start() {
+        text = GetComponent<Text>(); // Sets up the text reference.
 		moves = 0;
 		Randomize();
 		Calculate_Distance();
@@ -47,63 +48,67 @@ public class ConsolePrint : MonoBehaviour {
 		if (location.magnitude == home.magnitude) {
 			print("Congratulations, you've made it home in " + moves
 				+ " moves.");
+            text.text = "Congratulations, you've made it home in " + moves
+                + " moves.";
 		}
 		// E/W Tree
 		else if (location.y == home.y) {
 			if (location.x > home.x) {
 				print("You need to go west.");
-				text_ref.text = "Go west.";
+				text.text = "Go west.";
 			}
 			else {
 				print("You need to go east.");
-				text_ref.text = "Go east.";
+				text.text = "Go east.";
 			}
 		}
 		// N/S Tree
 		else if (location.x == home.x) {
 			if (location.y > home.y) {
 				print("You need to go south.");
-				text_ref.text = "Go south.";
+				text.text = "Go south.";
 			}
 			else {
 				print("You need to go north.");
-				text_ref.text = "Go north.";
+				text.text = "Go north.";
 			}
 		}
 		else {
 			// NE
 			if (location.x > home.x && location.y > home.y) {
 				print("You need to go southwest.");
-				text_ref.text = "Go southwest.";
+				text.text = "Go southwest.";
 			}
 			// SE
 			else if (location.x > home.x && location.y < home.y) {
 				print("You need to go northwest.");
-				text_ref.text = "Go northwest.";
+				text.text = "Go northwest.";
 			}
 			// SW
 			else if (location.x < home.x && location.y < home.y) {
 				print("You need to go northeast.");
-				text_ref.text = "Go northeast.";
+				text.text = "Go northeast.";
 			}
 			// NW - Could be else, but it's nice to see the logic.
 			else if (location.x < home.x && location.y > home.y) {
 				print("You need to go southeast.");
-				text_ref.text = "Go southeast.";
+				text.text = "Go southeast.";
 			}
 		}
 	}
 	//----------------------------------------------------------------
 	void Print_Location() {
 		print("Location: " + location);
+        text.text = "Location: " + location;
 	}
 	//----------------------------------------------------------------
 	void Print_Distance() {
 		print("Distance (M): " + path_to_home.magnitude);
-	}
+    }
 	//----------------------------------------------------------------
 	void Print_Home() {
 		print("Home: " + home);
+        text.text = "Home : " + home;
 	}
 	//----------------------------------------------------------------
 	//----------------------------------------------------------------
