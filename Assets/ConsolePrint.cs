@@ -15,9 +15,21 @@ public class ConsolePrint : MonoBehaviour {
 	protected Vector2 path_to_home;
 	public Input key;
 	protected int moves;
-	//----------------------------------------------------------------
-	// Use this for initialization. Runs once at start.
-	void Start() {
+
+    //----------------------------------------------------------------
+    IEnumerator Start_Game() {
+        print(Time.time);
+        yield return new WaitForSeconds(5);
+        print(Time.time);
+        text.text = "You are lost in the woods.\n" +
+            "Can you find your way home before the encroaching " +
+            "darkness consumes you? Use the arrows!";
+        yield return new WaitForSeconds(5);
+        print(Time.time);
+    }
+    //----------------------------------------------------------------
+    // Use this for initialization. Runs once at start.
+    void Start() {
         text = GetComponent<Text>(); // Sets up the text reference.
 		moves = 0;
 		Randomize();
@@ -26,8 +38,10 @@ public class ConsolePrint : MonoBehaviour {
 		print("\tGO HOME");
 		print("You are lost in the woods.\n" +
 			"Can you find your way home before the encroaching " + 
-			"darkness consumes you?");
-	}
+			"darkness consumes you? Use the arrows!");
+
+        StartCoroutine(Start_Game());
+    }
 	//----------------------------------------------------------------
 	void Randomize() {
 		location = new Vector2(Random.Range(0, 10),  // Loc X
@@ -50,6 +64,7 @@ public class ConsolePrint : MonoBehaviour {
 				+ " moves.");
             text.text = "Congratulations, you've made it home in " + moves
                 + " moves.";
+            StartCoroutine(End_Game());
 		}
 		// E/W Tree
 		else if (location.y == home.y) {
@@ -143,5 +158,12 @@ public class ConsolePrint : MonoBehaviour {
 		++moves;
 		Check_Progress();
 	}
+    //--------------------------------------------------------------------
+    IEnumerator End_Game() {
+        print(Time.time);
+        yield return new WaitForSeconds(5);
+        print(Time.time);
+        Application.Quit();
+    }
 }
 //--------------------------------------------------------------------
